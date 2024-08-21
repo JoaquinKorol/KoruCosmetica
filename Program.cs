@@ -1,3 +1,6 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using KoruCosmetica.Data;
 namespace KoruCosmetica
 {
     public class Program
@@ -5,6 +8,8 @@ namespace KoruCosmetica
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<KoruCosmeticaContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("KoruCosmeticaContext") ?? throw new InvalidOperationException("Connection string 'KoruCosmeticaContext' not found.")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
