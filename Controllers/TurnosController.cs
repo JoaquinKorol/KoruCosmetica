@@ -68,7 +68,7 @@ namespace KoruCosmetica.Controllers
                 turnos.ClienteID = clienteId;
                 _context.Add(turnos);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "ClientesTurno");
             }
             ViewData["ClienteID"] = new SelectList(_context.Clientes, "ClienteID", "ClienteID", turnos.ClienteID);
             ViewData["ProfesionalID"] = new SelectList(_context.Set<Profesionales>(), "ProfesionalID", "ProfesionalID", turnos.ProfesionalID);

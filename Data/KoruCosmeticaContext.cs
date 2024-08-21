@@ -24,6 +24,11 @@ namespace KoruCosmetica.Data
                 .WithOne(e => e.Cliente)
                 .HasForeignKey(e => e.ClienteID)
                 .HasPrincipalKey(e => e.ClienteID);
+
+            modelBuilder.Entity<Turnos>()
+            .HasOne(t => t.Servicio)
+            .WithMany(s => s.Turnos)
+            .HasForeignKey(t => t.ServicioID);
         }
     }
 }
