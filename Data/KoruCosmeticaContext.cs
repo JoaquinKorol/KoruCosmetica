@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using KoruCosmetica.Models;
+
+namespace KoruCosmetica.Data
+{
+    public class KoruCosmeticaContext : DbContext
+    {
+        public KoruCosmeticaContext (DbContextOptions<KoruCosmeticaContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<KoruCosmetica.Models.Clientes> Clientes { get; set; } = default!;
+        public DbSet<KoruCosmetica.Models.Turnos> Turnos { get; set; } = default!;
+        public DbSet<KoruCosmetica.Models.Profesionales> Profesionales { get; set; } = default!;
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Clientes>()
+                .HasMany(e => e.Turnos)
+                .WithOne(e => e.Cliente)
+                .HasForeignKey(e => e.ClienteID)
+                .HasPrincipalKey(e => e.ClienteID);
+        }
+    }
+}
