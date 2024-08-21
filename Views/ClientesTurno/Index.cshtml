@@ -1,0 +1,40 @@
+﻿@using KoruCosmetica.Models.ViewModel
+@model IEnumerable<ClientesTurnos>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Clientes y Turnos</title>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container">
+        <h2>Clientes y Turnos</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Servicio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Nombre</td>
+                        <td>@item.Apellido</td>
+                        <td>@item.Fecha.ToShortDateString()</td>
+                        <td>@item.Hora.ToString(@"HH\:mm")</td>
+                        <td>@item.Servicio</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
