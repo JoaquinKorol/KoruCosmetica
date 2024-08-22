@@ -11,7 +11,7 @@ namespace KoruCosmetica.Models
         public int TurnosId { get; set; }
         public DateOnly Fecha { get; set; }
         public TimeOnly Hora { get; set; }
-        public string Estado { get; private set; } = "Pendiente";
+        public string? Estado { get; private set; } = "Pendiente";
 
         // Foreign Keys
         // Las Foreign Keys se definen como nullable para que no sean obligatorias
@@ -27,9 +27,6 @@ namespace KoruCosmetica.Models
         public Servicios? Servicio { get; set; }
         public Profesionales? Profesional { get; set; }
 
-        public Turnos()
-        {
-            
-        }
+      
     }
 }
