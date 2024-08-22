@@ -63,7 +63,7 @@ namespace KoruCosmetica.Controllers
                 await _context.SaveChangesAsync();
                 TempData["ClienteID"] = clientes.ClienteID;
 
-                return RedirectToAction("Create", "Turnos");
+                return RedirectToAction("Create", "TurnosHorarios");
             }
             return View(clientes);
         }
