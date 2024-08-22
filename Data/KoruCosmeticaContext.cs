@@ -17,6 +17,8 @@ namespace KoruCosmetica.Data
         public DbSet<KoruCosmetica.Models.Clientes> Clientes { get; set; } = default!;
         public DbSet<KoruCosmetica.Models.Turnos> Turnos { get; set; } = default!;
         public DbSet<KoruCosmetica.Models.Profesionales> Profesionales { get; set; } = default!;
+
+        public DbSet<KoruCosmetica.Models.HorariosDisponibles> HorariosDisponibles { get; set; } = default!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Clientes>()
