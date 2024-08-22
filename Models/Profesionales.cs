@@ -10,9 +10,6 @@ namespace KoruCosmetica.Models
         public string Apellido { get; set; }
 
         public ICollection<Turnos> Turnos { get; }
-        public Profesionales()
-        {
-            
-        }
+       
     }
 }
