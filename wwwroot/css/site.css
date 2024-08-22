@@ -24,3 +24,7 @@ body {
 .form-control{
     margin: 10px;
 }
+
+.nombre-apellido{
+    display: inline-block;
+}
