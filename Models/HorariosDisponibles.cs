@@ -11,7 +11,7 @@ namespace KoruCosmetica.Models
         public TimeOnly HoraFin { get; set; }
         public string? Estado { get; set; }
 
-        public int? DiaID {  get; set; }
+        public int DiaID {  get; set; }
         public int? ProfesionalID {  get; set; }
 
         public Profesionales? Profesional { get; set; }
