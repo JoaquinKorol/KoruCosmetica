@@ -3,6 +3,8 @@ using KoruCosmetica.Models.ViewModel;
 using KoruCosmetica.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 public class TurnosHorariosController : Controller
 {
@@ -20,10 +22,13 @@ public class TurnosHorariosController : Controller
 
     public IActionResult Create()
     {
-        ViewBag.ClienteID = new SelectList(_context.Clientes, "ClienteID", "Nombre"); // Ajuste para mostrar nombre del cliente
+        // Cargar datos iniciales para los SelectLists
+        ViewBag.ClienteID = new SelectList(_context.Clientes, "ClienteID", "Nombre");
         ViewBag.ProfesionalID = new SelectList(_context.Set<Profesionales>(), "ProfesionalID", "Nombre");
         ViewBag.ServicioID = new SelectList(_context.Set<Servicios>(), "ServicioID", "Nombre");
-        ViewBag.HorarioDisponible = new SelectList(_context.Set<HorariosDisponibles>(), "HoraInicio", "HoraInicio"); // Asegúrate de que 'HorarioID' sea el valor adecuado
+
+        // Inicialmente, no se muestran horarios disponibles
+        ViewBag.HorariosDisponibles = new SelectList(_context.Set<HorariosDisponibles>(), "HoraInicio", "HoraInicio");
 
         return View();
     }
@@ -34,22 +39,42 @@ public class TurnosHorariosController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (TempData["ClienteID"] is int clienteId)
-            {
-                viewModel.Turnos.Hora = viewModel.HorariosDisponibles.HoraInicio;
-                viewModel.Turnos.ClienteID = clienteId;
-                _context.Add(viewModel.Turnos);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "ClientesTurno");
-            }
+            // Obtener el día de la semana desde la fecha del turno
+            int diaID = TurnosHorarios.GetDiaIDFromDayOfWeek(viewModel.Turnos.Fecha.DayOfWeek);
+
+            // Obtener los horarios disponibles para el día de la semana correspondiente
+            var horariosDisponibles =  _context.Set<HorariosDisponibles>()
+                .Where(h => h.DiaID == diaID)
+                .Select(h => h.HoraInicio)
+                .ToList();
+
+            // Pasar los horarios disponibles a la vista
+            ViewBag.HorariosDisponibles = horariosDisponibles;
+
+            // Aquí puedes manejar el resto de la lógica para crear el turno
+            viewModel.Turnos.ClienteID = TempData["ClienteID"] as int?;
+
+            _context.Add(viewModel.Turnos);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "ClientesTurno");
         }
 
-        // Vuelve a cargar los ViewBags en caso de error
-        ViewBag.ClienteID = new SelectList(_context.Clientes, "ClienteID", "Nombre", viewModel.Turnos.ClienteID);
-        ViewBag.ProfesionalID = new SelectList(_context.Set<Profesionales>(), "ProfesionalID", "Nombre", viewModel.Turnos.ProfesionalID);
-        ViewBag.ServicioID = new SelectList(_context.Set<Servicios>(), "ServicioID", "Nombre", viewModel.Turnos.ServicioID);
-        ViewBag.HorarioDisponible = new SelectList(_context.Set<HorariosDisponibles>(), "HorarioID", "HoraInicio", viewModel.HorariosDisponibles.HoraInicio);
 
         return View(viewModel);
+
     }
-}
+    [HttpGet]
+    public async Task<IActionResult> ObtenerHorariosDisponibles(DateTime fecha)
+    {
+        int diaID = TurnosHorarios.GetDiaIDFromDayOfWeek(fecha.DayOfWeek);
+
+        var horariosDisponibles = await _context.Set<HorariosDisponibles>()
+            .Where(h => h.DiaID == diaID)
+            .Select(h => h.HoraInicio.ToString("HH:mm"))
+            .ToListAsync();
+
+        return Json(horariosDisponibles);
+    }
+} 
+
