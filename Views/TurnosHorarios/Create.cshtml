@@ -2,24 +2,31 @@
 
 @{
     ViewData["Title"] = "Crear Turno";
+    var horariosDisponibles = ViewBag.HorariosDisponibles as List<TimeOnly>;
 }
 
 <h1>@ViewData["Title"]</h1>
 
-
 <form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-       
-        <input asp-for="Turnos.Fecha" class="form-control" type="date" placeholder="" />
+        <input asp-for="Turnos.Fecha" class="form-control" type="date" placeholder="" id="fecha" />
         <span asp-validation-for="Turnos.Fecha" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="HorariosDisponibles.HoraInicio" class="control-label"></label>
-        <select asp-for="HorariosDisponibles.HoraInicio" class="form-control" asp-items="ViewBag.HorarioDisponible">
-            <option value="" disabled selected>Elija Horario</option>
+        <select id="hora" name="Turnos.Hora" class="form-control">
+            @if (horariosDisponibles != null)
+            {
+                foreach (var hora in horariosDisponibles)
+                {
+                    <option value="@hora.ToString(@"hh\:mm")">@hora.ToShortTimeString()</option>
+                }
+            }
+            else
+            {
+                <option value="">No hay horarios disponibles</option>
+            }
         </select>
-        <span asp-validation-for="HorariosDisponibles.HoraInicio" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -37,6 +44,33 @@
         <span asp-validation-for="Turnos.ProfesionalID" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" value="Crear" class="btn btn-primary" />
     </div>
 </form>
+
+<script>
+    document.getElementById('fecha').addEventListener('change', function () {
+        var fecha = this.value;
+        if (fecha) {
+            fetch('/TurnosHorarios/ObtenerHorariosDisponibles?fecha=' + encodeURIComponent(fecha))
+                .then(response => response.json())
+                .then(data => {
+                    var horaSelect = document.getElementById('hora');
+                    horaSelect.innerHTML = ''; // Limpiar las opciones existentes
+                    if (data.length > 0) {
+                        data.forEach(hora => {
+                            var option = document.createElement('option');
+                            option.value = hora;
+                            option.text = hora;
+                            horaSelect.add(option);
+                        });
+                    } else {
+                        var option = document.createElement('option');
+                        option.value = '';
+                        option.text = 'No hay horarios disponibles';
+                        horaSelect.add(option);
+                    }
+                });
+        }
+    });
+</script>
