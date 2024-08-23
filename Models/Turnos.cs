@@ -10,7 +10,7 @@ namespace KoruCosmetica.Models
         [Key]
         public int TurnosId { get; set; }
         public DateOnly Fecha { get; set; }
-        public TimeOnly Hora { get; set; }
+        public TimeOnly Hora { get;  set; }
         public string? Estado { get; private set; } = "Pendiente";
 
         // Foreign Keys
