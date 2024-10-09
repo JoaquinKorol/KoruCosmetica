@@ -1,0 +1,100 @@
+﻿@using KoruCosmetica.Models.ViewModel
+@model KoruCosmetica.Models.ViewModel.TurnosViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Clientes y Turnos</title>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container mt-5" id="form">
+        <h1 class="text-center mb-4">Todos los Turnos</h1>
+
+        <!-- Formulario de filtros -->
+        <div class="container mt-5">
+            <h2 class="text-center mb-4">Filtrar Turnos</h2>
+            <form method="get" action="@Url.Action("IndexAdmin")" class="row mb-3">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="nombreBuscar">Buscar por Nombre</label>
+                        <input type="text" class="form-control" name="nombreBuscar" placeholder="Nombre del Cliente" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fechaInicio">Fecha de Inicio</label>
+                        <input type="date" class="form-control" name="fechaInicio" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fechaFin">Fecha de Fin</label>
+                        <input type="date" class="form-control" name="fechaFin" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="servicioBuscar">Buscar por Servicio</label>
+                        <select class="form-control" name="servicioBuscar" asp-items="ViewBag.ServicioID">
+                            <option value="" disabled selected>Elija Tratamiento</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary me-2">Filtrar</button>
+                    <button type="submit" class="btn btn-secondary" name="reset">Limpiar</button>
+                </div>
+               
+            </form>
+        </div>
+
+        <table class="table justify-content-center">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Servicio</th>
+                    <th>Cancelar Turno</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Turnos)
+                {
+                    <tr>
+                        <td>@item.Nombre</td>
+                        <td>@item.Apellido</td>
+                        <td>@item.Fecha.ToShortDateString()</td>
+                        <td>@item.Hora.ToString(@"HH\:mm")</td>
+                        <td>@item.Servicio</td>
+                        <td>
+                            <form asp-controller="TurnosHorarios" asp-action="CancelarTurno" method="post" onsubmit="return confirm('¿Está seguro que desea cancelar el turno?');">
+                                <input type="hidden" name="id" value="@item.ID" />
+                                <button type="submit" class="btn btn-danger" aria-label="Close" title="Cancelar" data-toggle="tooltip" data-placement="top" title="Cancelar turno">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip(); // Inicializa los tooltips
+        });
+        function clearFilters() {
+                document.querySelector('input[name="nombreBuscar"]').value = '';
+                document.querySelector('input[name="fechaInicio"]').value = '';
+                document.querySelector('input[name="fechaFin"]').value = '';
+                document.querySelector('select[name="servicioBuscar"]').selectedIndex = 0; // Resetea al primer elemento
+            }
+ 
+    </script>
+</body>
+</html>
