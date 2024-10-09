@@ -1,52 +1,65 @@
 ﻿@model KoruCosmetica.Models.ViewModel.TurnosHorarios
 
 @{
-    ViewData["Title"] = "Crear Turno";
+    ViewData["Title"] = "Sacar Turno";
     var horariosDisponibles = ViewBag.HorariosDisponibles as List<TimeOnly>;
 }
 
-<h1>@ViewData["Title"]</h1>
+<body>
+    <div id="form">
+        <h1 class="text-center my-4">Sacar Turno</h1>
+        <h4 class="text-center">Rellene el siguiente formulario</h4>
+        <hr />
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form asp-action="SacarTurno">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
-<form asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group">
-        <input asp-for="Turnos.Fecha" class="form-control" type="date" placeholder="" id="fecha" />
-        <span asp-validation-for="Turnos.Fecha" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <select id="hora" name="Turnos.Hora" class="form-control">
-            @if (horariosDisponibles != null)
-            {
-                foreach (var hora in horariosDisponibles)
-                {
-                    <option value="@hora.ToString(@"hh\:mm")">@hora.ToShortTimeString()</option>
-                }
-            }
-            else
-            {
-                <option value="">No hay horarios disponibles</option>
-            }
-        </select>
-    </div>
+                    <div class="form-group">
+                        <input asp-for="Turnos.Fecha" class="form-control" type="date" placeholder="Seleccione la fecha" id="fecha" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="Turnos.Fecha" class="text-danger"></span>
+                    </div>
 
-    <div class="form-group">
-        <label asp-for="Turnos.ServicioID" class="control-label"></label>
-        <select asp-for="Turnos.ServicioID" class="form-control" asp-items="ViewBag.ServicioID">
-            <option value="" disabled selected>Elija Servicio</option>
-        </select>
-        <span asp-validation-for="Turnos.ServicioID" class="text-danger"></span>
+                    <div class="form-group">
+                        <select id="hora" name="Turnos.Hora" class="form-control">
+                            @if (horariosDisponibles != null && horariosDisponibles.Any())
+                            {
+                                foreach (var hora in horariosDisponibles)
+                                {
+                                    <option value="@hora.ToString(@"hh\:mm")">@hora.ToShortTimeString()</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="">No hay horarios disponibles</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Turnos.Hora" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <select asp-for="Turnos.ServicioID" class="form-control" asp-items="ViewBag.ServicioID">
+                            <option value="" disabled selected>Elija Tratamiento</option>
+                        </select>
+                        <span asp-validation-for="Turnos.ServicioID" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <select asp-for="Turnos.ProfesionalID" class="form-control" asp-items="ViewBag.ProfesionalID">
+                            <option value="" disabled selected>Elija Profesional</option>
+                        </select>
+                        <span asp-validation-for="Turnos.ProfesionalID" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <input type="submit" value="Sacar" class="btn btn-primary btn-block" />
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Turnos.ProfesionalID" class="control-label"></label>
-        <select asp-for="Turnos.ProfesionalID" class="form-control" asp-items="ViewBag.ProfesionalID">
-            <option value="" disabled selected>Elija Profesional</option>
-        </select>
-        <span asp-validation-for="Turnos.ProfesionalID" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Crear" class="btn btn-primary" />
-    </div>
-</form>
+</body>
+
 
 <script>
     document.getElementById('fecha').addEventListener('change', function () {
