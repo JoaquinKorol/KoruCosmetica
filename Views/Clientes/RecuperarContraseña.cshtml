@@ -1,0 +1,32 @@
+﻿@model KoruCosmetica.Models.Clientes
+
+@{
+    ViewData["Title"] = "Recuperar Contraseña";
+}
+
+<div id="form">
+    <h1 class="text-center my-4">Recuperar Contraseña</h1>
+    <h4 class="text-center">Ingrese su correo electrónico</h4>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="EnviarRecuperacion" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="mb-3">
+                    <input asp-for="Mail" class="form-control" placeholder="Correo electrónico" required />
+                </div>
+
+                <div class="text-center">
+                    <input type="submit" value="Enviar" class="btn btn-primary btn-block" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Contraseña Actualizada";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">¡Contraseña Actualizada!</h1>
+        <p class="text-center">Su contraseña ha sido actualizada exitosamente.</p>
+
+        <div class="text-center">
+            <a class="btn btn-primary" href="@Url.Action("Login", "Clientes")">Iniciar Sesión</a>
+        </div>
+    </div>
+</body>
+</html>

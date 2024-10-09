@@ -1,0 +1,36 @@
+﻿@model KoruCosmetica.Models.ViewModel.RestablecerContraseña
+
+@{
+    ViewData["Title"] = "Restablecer Contraseña";
+}
+
+<div id="form">
+    <h1 class="text-center my-4">Restablecer Contraseña</h1>
+    <h4 class="text-center">Ingrese su nueva contraseña</h4>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="ActualizarContraseña" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                <input type="hidden" name="email" value="@Context.Request.Query["email"]" />
+                <div class="mb-3">
+                    <input asp-for="NuevaContraseña" class="form-control" placeholder="Nueva Contraseña" type="password" required name="NuevaContraseña" />
+                </div>
+
+                <div class="mb-3">
+                    <input asp-for="ConfirmarContraseña" class="form-control" placeholder="Confirmar Contraseña" type="password" required name="ConfirmarContraseña" />
+                </div>
+
+                <div class="text-center">
+                    <input type="submit" value="Restablecer Contraseña" class="btn btn-primary btn-block" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ 
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
