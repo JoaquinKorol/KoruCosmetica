@@ -20,11 +20,13 @@ namespace KoruCosmetica
                 options.UseSqlServer(builder.Configuration.GetConnectionString("KoruCosmeticaContext") ?? throw new InvalidOperationException("Connection string 'KoruCosmeticaContext' not found.")));
 
             var appSettingsSection = builder.Configuration.GetSection("AppSettings");
-            var stmpSettingsSection = builder.Configuration.GetSection("SmtpSettings");
+
+            var smtpSettingsSection = builder.Configuration.GetSection("SmtpSettings");
+
 
             builder.Services.Configure<AppSettings>(appSettingsSection);
-
-            builder.Services.Configure<SmtpSettings>(stmpSettingsSection);
+;
+            builder.Services.Configure<SmtpSettings>(smtpSettingsSection);
 
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 
