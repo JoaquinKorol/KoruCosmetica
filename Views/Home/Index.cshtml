@@ -1,8 +1,285 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using KoruCosmetica.Models.ViewModel
+@model IEnumerable<ClientesTurnos>
+
+@{
+    ViewData["Title"] = "Koru Cosmetica";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/KoruCosmetica.styles.css" asp-append-version="true" />
+    <title>Koru Cosmetica - Inicio</title>
+</head>
+<body>
+   
+
+    <div class="hero container">
+        <div class="hero-text">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <h1 class="titulo">¡Koru Cosmetica!<br /> Cosmetologa.</h1>
+            }
+            else
+            {
+                <h1 class="titulo">Hola @User.Claims.FirstOrDefault(c => c.Type == "nombre")?.Value, ¡nos alegra verte de nuevo!</h1>
+            }
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <section id="quienes-somos">
+        <div class="container my-5 somos-div">
+            <div class="text-center mb-4">
+                <h2 class="display-4 font-weight-bold text-primary titulo-3d">¿Quiénes somos?</h2>
+                <p class="lead text-secondary">Descubre a Koru, tu experta en cuidado facial.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="bg-light p-4 rounded shadow">
+                        <p class="text-muted" style="font-size: 18px;">
+                            🌸 Soy Koru, una apasionada cosmetóloga dedicada a cuidar la salud de tu piel.
+                            Mi enfoque se basa en proporcionar tratamientos personalizados que se adaptan a tu biotipo y necesidades específicas.
+                        </p>
+                        <p class="text-muted" style="font-size: 18px;">
+                            ✨ Mi misión es ayudarte a resaltar tu belleza natural mediante cuidados faciales efectivos.
+                            Ofrezco masajes faciales y limpiezas profundas, utilizando productos de alta calidad para garantizar resultados visibles y duraderos.
+                        </p>
+                        <p class="text-muted" style="font-size: 18px;">
+                            💖 Estoy comprometida a brindarte una experiencia única, donde cada sesión es un paso hacia una piel más saludable y radiante.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="section-divider"></div>
+
+    <!-- Sección de Servicios -->
+    <section
+    
+        <div class="container text-center my-5 section servicio">
+
+            <h2 class="display-4 font-weight-bold text-primary titulo-3d">¿Que tratamientos ofrecemos?</h2>
+            <p class="aclaracion">Ponga el raton encima del tratamiento para más información.</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-container">
+                        <div class="card front">
+                            Limpieza Profunda
+                        </div>
+                        <div class="card back">
+                            <div>
+                                <strong>Incluye:</strong><br>
+                                - Higiene<br>
+                                - Exfoliación<br>
+                                - Extracciones<br>
+                                - Aplicación de máscara<br>
+                                - Producto final<br>
+                                - Protector solar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-container">
+                        <div class="card front">
+                            Limpieza Profunda + Peeling
+                        </div>
+                        <div class="card back">
+                            <div>
+                                <strong>Incluye:</strong><br>
+                                - Higiene<br>
+                                - Exfoliación<br>
+                                - Peeling específico<br>
+                                - Extracciones<br>
+                                - Aplicación de máscara<br>
+                                - Producto final<br>
+                                - Protector solar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-container">
+                        <div class="card front">
+                            Limpieza Profunda + Masajes Faciales
+                        </div>
+                        <div class="card back">
+                            <div>
+                                <strong>Incluye:</strong><br>
+                                - Higiene<br>
+                                - Exfoliación<br>
+                                - Masajes faciales<br>
+                                - Extracciones<br>
+                                - Aplicación de máscara<br>
+                                - Producto final<br>
+                                - Protector solar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <div class="col-md-4 d-flex justify-content-center">
+                    <div class="card-container">
+                        <div class="card front">
+                            Masajes Faciales
+                        </div>
+                        <div class="card back">
+                            <div>
+                                <strong>Incluye:</strong><br>
+                                - Higiene<br>
+                                - Exfoliación<br>
+                                - Masajes faciales<br>
+                                - Aplicación de máscara<br>
+                                - Producto final<br>
+                                - Protector solar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center">
+                    <div class="card-container">
+                        <div class="card front">
+                            Dermaplaning
+                        </div>
+                        <div class="card back">
+                            <div>
+                                <strong>Incluye:</strong><br>
+                                - Doble limpieza<br>
+                                - Exfoliación<br>
+                                - Peeling específico<br>
+                                - Técnica de dermaplaning<br>
+                                - Producto final<br>
+                                - Protector solar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cta-container">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <p>Usted no ha iniciado sesión. Para sacar un turno debe registrarse o iniciar sesión.</p>
+                    <a href="clientes/registrar" class="btn btn-primary">Registrarse</a>
+                    <a href="clientes/login" class="btn btn-secondary">Iniciar Sesión</a>
+                }
+                else
+                {
+                    <a href="TurnosHorarios/Create" class="btn btn-primary btn-full">Sacar Turno</a>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Línea divisoria -->
+    <div class="section-divider"></div>
+
+    <section>
+    <!-- Sección de Testimonios -->
+        <div id="testimonios" class="container my-5 section">
+            <h2 class="display-4 font-weight-bold text-primary titulo-3d">Testimonios de Nuestros Clientes</h2>
+
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="d-block w-100 text-center">
+                            <p>"El ambiente es relajante y los tratamientos son increíbles. ¡Definitivamente regresaré!"</p>
+                            <h5>María Rodríguez</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-block w-100 text-center">
+                            <p>"El personal fue muy profesional y atento. Me sentí súper cómoda."</p>
+                            <h5>Juan Pérez</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-block w-100 text-center">
+                            <p>"¡Me encantó la atención y la calidad de los productos que usan!"</p>
+                            <h5>Carmen González</h5>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#testimonialCarousel" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </a>
+                <a class="carousel-control-next" href="#testimonialCarousel" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    
+    <section>
+        <div class="container my-5 galeria">
+            <h2 class="display-4 font-weight-bold text-primary titulo-3d">Galeria de Imagenes</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="image-container">
+                        <img src="images/1.jpg" class="img-fluid" alt="Imagen 1" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="image-container">
+                        <img src="images/2.jpg" class="img-fluid" alt="Imagen 2" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="image-container">
+                        <img src="images/3.jpg" class="img-fluid" alt="Imagen 3" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="image-container">
+                        <img src="images/4.jpg" class="img-fluid" alt="Imagen 4" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="image-container">
+                        <img src="images/5.jpg" class="img-fluid" alt="Imagen 5" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="image-container">
+                        <img src="images/6.jpg" class="img-fluid" alt="Imagen 6" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <footer>
+        
+        <p>&copy; @DateTime.UtcNow.Year Cosmetica. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+        const token = localStorage.getItem('token');
+        fetch('URL_DEL_ENDPOINT', {
+            method: 'GET',
+            headers: {
+                'Authorization': Bearer ${ token }
+            }
+        });
+    </script>
+</body>
+</html>
+
+
