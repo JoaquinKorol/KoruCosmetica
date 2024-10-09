@@ -212,6 +212,7 @@ namespace KoruCosmetica.Controllers
             return RedirectToAction("Error", "Home");
         }
 
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
