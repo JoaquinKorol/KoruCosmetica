@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using KoruCosmetica.Data;
 using KoruCosmetica.Models;
 using Microsoft.CodeAnalysis.Scripting;
-using KoruCosmetica.Models.Requests;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
