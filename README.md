@@ -17,4 +17,8 @@ KoruCosmetica es una aplicación web desarrollada en ASP.NET que permite a los u
 - Gestión de servicios y profesionales por parte de administradores.
 - Filtrado de turnos según diferentes criterios (nombre, fecha, servicio).
 
+## Demostración
+Puedes ver una demostración rápida del proyecto en el siguiente enlace:
+
+[Ver Video de Presentación](https://youtu.be/Pjc4p6w2EP0)
 
