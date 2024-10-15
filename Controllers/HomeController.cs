@@ -67,23 +67,23 @@ namespace KoruCosmetica.Controllers
             {
                 var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
 
-                // Extraer el UserId u otra información del token
+                
                 var userIdClaim = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier);
                 if (userIdClaim != null)
                 {
-                    // Aquí deberías obtener el usuario desde tu base de datos
+                    
                     var userId = userIdClaim.Value;
-                    return ObtenerUsuarioPorId(userId); // Implementa este método para obtener el usuario
+                    return ObtenerUsuarioPorId(userId); 
                 }
             }
             catch (SecurityTokenException)
             {
-                // El token no es válido
+                
                 return null;
             }
             catch (Exception)
             {
-                // Maneja cualquier otro error
+                
                 return null;
             }
 
