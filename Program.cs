@@ -8,6 +8,7 @@ using KoruCosmetica.Models;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
 using KoruCosmetica.Services;
+using Microsoft.Identity.Client;
 namespace KoruCosmetica
 {
     public class Program
@@ -25,10 +26,20 @@ namespace KoruCosmetica
 
 
             builder.Services.Configure<AppSettings>(appSettingsSection);
-;
+            ;
             builder.Services.Configure<SmtpSettings>(smtpSettingsSection);
 
             builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+            builder.Services.AddScoped<IServicioCliente, ServicioCliente>();
+
+            builder.Services.AddScoped<IServicioRecuperar, ServicioRecuperar>();
+
+            builder.Services.AddScoped <IServicioClienteTurno, ServicioClienteTurno>();
+
+            builder.Services.AddScoped<IServicioAdminTurno, ServicioAdminTurno>();
+
+            builder.Services.AddScoped<IServicioTurnosHorarios, ServiciosTurnosHorarios>();
 
 
             // Add services to the container.
